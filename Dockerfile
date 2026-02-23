@@ -12,11 +12,12 @@ RUN dotnet build "Console.App1.csproj" -c Release -o /app/build
 FROM build AS publish
 RUN dotnet publish "Console.App1.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
-FROM mcr.microsoft.com/dotnet/runtime:8.0 AS final
+# BU YERDA .NET 9.0 ISHLATILISHI SHART!
+FROM mcr.microsoft.com/dotnet/runtime:9.0 AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
-# Render botni o'chirib qo'ymasligi uchun portni simulyatsiya qilamiz
+# Render o'chirib qo'ymasligi uchun port
 ENV PORT=10000
 EXPOSE 10000
 
